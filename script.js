@@ -53,6 +53,13 @@ function piecesLoop() {
       // unique piece ID for checking placement
       dropzone.dataset.xyid = `id${x}${y}`;
 
+      // add xy-ID to checkList as false
+      let obj = {
+        xyid: `id${x}${y}`,
+        correct: false
+      };
+      checkList.push(obj);
+
       document.querySelector("#container").appendChild(dropzone);
     }
   }
@@ -68,8 +75,8 @@ function piecesLoop() {
 
       // set background image
       piece.style.backgroundImage = `url('${inputSrc}')`;
-      piece.style.backgroundPosition = `${y *
-        (container_width / numOfYPieces)}px ${x *
+      piece.style.backgroundPosition = `${x *
+        (container_width / numOfYPieces)}px ${y *
         (container_height / numOfXPieces)}px`;
 
       piece.style.position = "absolute";
@@ -149,4 +156,11 @@ function dragPiece() {
   });
 }
 
-function checkPieces(pieceDropped, droppedInZone) {}
+function checkPieces(pieceDropped, droppedInZone) {
+  console.log("checkPieces");
+  console.log(checkList);
+  if (pieceDropped === droppedInZone) {
+    let objIndex = checkList.findIndex(obj => obj.xyid == pieceDropped);
+    checkList[objIndex].correct = "true";
+  }
+}
