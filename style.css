@@ -4,10 +4,6 @@
   box-sizing: border-box;
 }
 
-/* img {
-  width: 100%;
-} */
-
 body {
   margin: 0;
   padding: 0;
@@ -16,11 +12,12 @@ body {
 #container {
   display: grid;
   background-color: beige;
-  /*            width :200px;*/
-
 }
 
 .piece {
   outline: 0.5px solid grey;
+}
 
+img {
+  display: none;
 }
