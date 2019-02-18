@@ -48,7 +48,7 @@ function piecesLoop() {
 
       dropzone.classList.add("dropzone");
       dropzone.style.height = container_height / numOfYPieces + "px";
-      dropzone.textContent = `${x}${y}`;
+      // dropzone.textContent = `${x}${y}`;
 
       // unique piece ID for checking placement
       dropzone.dataset.xyid = `id${x}${y}`;
@@ -69,7 +69,7 @@ function piecesLoop() {
       let piece = document.createElement("div");
 
       piece.classList.add("piece");
-      piece.textContent = `${x}${y}`;
+      // piece.textContent = `${x}${y}`;
       piece.style.height = container_height / numOfYPieces + "px";
       piece.style.width = container_width / numOfXPieces + "px";
 
@@ -167,9 +167,5 @@ function checkPieces(pieceDropped, droppedInZone) {
   if (pieceDropped === droppedInZone) {
     let objIndex = checkList.findIndex(obj => obj.xyid == pieceDropped);
     checkList[objIndex].correct = "true";
-  }
-
-  if (checkList.correct(obj).every(k => obj[k] === true)) {
-    alert("You did it!");
   }
 }

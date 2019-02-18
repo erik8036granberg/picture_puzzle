@@ -6,12 +6,23 @@
 
 body {
   margin: 0;
-  padding: 0;
+  padding: 100px 200px 200px 200px;
+}
+
+.wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+
+.dropzone {
+  border: 1px black solid;
 }
 
 #container {
   display: grid;
   background-color: beige;
+  margin: 50px 0 0 0;
 }
 
 .piece {
@@ -20,4 +31,15 @@ body {
 
 img {
   display: none;
+}
+
+#inputSrc {
+  max-width: 200px;
+  margin: 10px 10px 0 0;
+}
+
+#inputX,
+#inputY {
+  max-width: 30px;
+  margin: 10px 10px 0 0;
 }
