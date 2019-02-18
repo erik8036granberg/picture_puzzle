@@ -7,6 +7,7 @@ let naturalHeight;
 const container_width = 400;
 const container_height = 400;
 let dragged;
+const checkList = [];
 
 window.addEventListener("DOMContentLoaded", init);
 
@@ -45,11 +46,11 @@ function piecesLoop() {
     for (let x = 0; x < numOfXPieces; x++) {
       let dropzone = document.createElement("div");
 
+      dropzone.classList.add("dropzone");
       dropzone.style.height = container_height / numOfYPieces + "px";
       dropzone.textContent = `${x}${y}`;
-      dropzone.classList.add("dropzone");
 
-      // unique piece ID
+      // unique piece ID for checking placement
       dropzone.dataset.xyid = `id${x}${y}`;
 
       document.querySelector("#container").appendChild(dropzone);
@@ -60,32 +61,31 @@ function piecesLoop() {
     for (let x = 0; x < numOfXPieces; x++) {
       let piece = document.createElement("div");
 
+      piece.classList.add("piece");
+      piece.textContent = `${x}${y}`;
       piece.style.height = container_height / numOfYPieces + "px";
       piece.style.width = container_width / numOfXPieces + "px";
-      piece.textContent = `${x}${y}`;
-      piece.classList.add("piece");
-      // piece.classList.add("move");
 
-      piece.style.position = "absolute";
-      piece.id = "draggable";
-      piece.draggable = "true";
-
+      // set background image
       piece.style.backgroundImage = `url('${inputSrc}')`;
       piece.style.backgroundPosition = `${y *
         (container_width / numOfYPieces)}px ${x *
         (container_height / numOfXPieces)}px`;
 
+      piece.style.position = "absolute";
+      piece.id = "draggable";
+      piece.draggable = "true";
+
       piece.style.left = `${Math.random() * 100 + 500}px`;
       piece.style.top = `${Math.random() * 100}px`;
 
-      console.log(inputSrc);
-
-      // unique piece ID
+      // unique piece ID for checking placement
       piece.dataset.xyid = `id${x}${y}`;
 
       document.querySelector("#container").appendChild(piece);
     }
   }
+
   dragPiece();
 }
 
@@ -100,6 +100,8 @@ function dragPiece() {
     dragged = event.target;
     // make it half transparent
     event.target.style.opacity = 0.5;
+
+    event.dataTransfer.setData("text", event.target.dataset.xyid);
   });
 
   document.addEventListener("dragend", function(event) {
@@ -116,7 +118,7 @@ function dragPiece() {
   document.addEventListener("drop", function(event) {
     // prevent default action (open as link for some elements)
     event.preventDefault();
-    console.log("DROP", event.target.className);
+
     // move dragged elem to the selected drop target
     if (event.target.className == "dropzone") {
       event.target.style.background = "";
@@ -124,10 +126,27 @@ function dragPiece() {
       event.target.appendChild(dragged);
       dragged.style.left = event.target.style.left;
       dragged.style.top = event.target.style.top;
+
+      let droppedInZone = event.target.dataset.xyid;
+      console.log("Drop-zone: ", droppedInZone);
+
+      let pieceDropped = event.dataTransfer.getData("text");
+      console.log("Piece dropped: ", pieceDropped);
+
+      // Clear the drag data cache (for all formats/types)
+      event.dataTransfer.clearData();
+
+      checkPieces(pieceDropped, droppedInZone);
     } else if (event.target.className == "theBody") {
       // park the dragged elem somewhere on the body
+
+      let droppedInZone = "theBody";
+      console.log("Drop-zone: ", droppedInZone);
+
       dragged.style.left = event.pageX + "px";
       dragged.style.top = event.pageY + "px";
     }
   });
 }
+
+function checkPieces(pieceDropped, droppedInZone) {}
