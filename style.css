@@ -1,0 +1,26 @@
+/* basic styles */
+
+* {
+  box-sizing: border-box;
+}
+
+/* img {
+  width: 100%;
+} */
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#container {
+  display: grid;
+  background-color: beige;
+  /*            width :200px;*/
+
+}
+
+.piece {
+  outline: 0.5px solid grey;
+
+}
