@@ -134,9 +134,11 @@ function dragPiece() {
       dragged.style.left = event.target.style.left;
       dragged.style.top = event.target.style.top;
 
+      // dropzone id when piece is dropped
       let droppedInZone = event.target.dataset.xyid;
       console.log("Drop-zone: ", droppedInZone);
 
+      // piece id when dropped
       let pieceDropped = event.dataTransfer.getData("text");
       console.log("Piece dropped: ", pieceDropped);
 
@@ -147,6 +149,7 @@ function dragPiece() {
     } else if (event.target.className == "theBody") {
       // park the dragged elem somewhere on the body
 
+      // if the piece is dropped outside the dropzone
       let droppedInZone = "theBody";
       console.log("Drop-zone: ", droppedInZone);
 
@@ -159,8 +162,14 @@ function dragPiece() {
 function checkPieces(pieceDropped, droppedInZone) {
   console.log("checkPieces");
   console.log(checkList);
+
+  // if dropped piece matches dropzone - change value in checkList
   if (pieceDropped === droppedInZone) {
     let objIndex = checkList.findIndex(obj => obj.xyid == pieceDropped);
     checkList[objIndex].correct = "true";
+  }
+
+  if (checkList.correct(obj).every(k => obj[k] === true)) {
+    alert("You did it!");
   }
 }
