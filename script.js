@@ -2,6 +2,8 @@
 let inputSrc;
 let numOfXPieces;
 let numOfYPieces;
+let image;
+let naturalHeight;
 const container_width = 400;
 const container_height = 400;
 
@@ -23,19 +25,14 @@ function loadTheImage() {
   numOfYPieces = document.querySelector("#inputY").value;
 
   // load image in DOM
-  document.querySelector("img").src = inputSrc;
-  document.querySelector("img").onload = dropLoop();
+  image = document.querySelector("img");
+  image.src = inputSrc;
+  naturalHeight = image.naturalHeight;
+  document.querySelector("img").onload = dropContainerLoop();
 }
 
-// function theImageHasLoaded() {
-//   console.log("theImageHasLoaded");
-//   console.log(inputSrc);
-//   console.log(inputX);
-//   console.log(inputY);
-// }
-
-function dropLoop() {
-  console.log(dropLoop);
+function dropContainerLoop() {
+  console.log(dropContainerLoop);
   document.querySelector("#container").style.gridTemplateColumns = `repeat(${numOfXPieces}, 1fr)`;
   document.querySelector("#container").style.width = `${container_width}px`
   for (let y = 0; y < numOfYPieces; y++) {
