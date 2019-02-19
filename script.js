@@ -100,9 +100,9 @@ function dragPiece() {
   console.log("dragPiece");
 
   /* events fired on the draggable target */
-  document.addEventListener("drag", function(event) {}, false);
+  document.addEventListener("drag", function (event) {}, false);
 
-  document.addEventListener("dragstart", function(event) {
+  document.addEventListener("dragstart", function (event) {
     // store a ref. on the dragged elem
     dragged = event.target;
     // make it half transparent
@@ -111,18 +111,18 @@ function dragPiece() {
     event.dataTransfer.setData("text", event.target.dataset.xyid);
   });
 
-  document.addEventListener("dragend", function(event) {
+  document.addEventListener("dragend", function (event) {
     // reset the transparency
     event.target.style.opacity = "";
   });
 
   /* events fired on the drop targets */
-  document.addEventListener("dragover", function(event) {
+  document.addEventListener("dragover", function (event) {
     // prevent default to allow drop
     event.preventDefault();
   });
 
-  document.addEventListener("drop", function(event) {
+  document.addEventListener("drop", function (event) {
     // prevent default action (open as link for some elements)
     event.preventDefault();
 
@@ -166,6 +166,18 @@ function checkPieces(pieceDropped, droppedInZone) {
   // if dropped piece matches dropzone - change value in checkList
   if (pieceDropped === droppedInZone) {
     let objIndex = checkList.findIndex(obj => obj.xyid == pieceDropped);
-    checkList[objIndex].correct = "true";
+    checkList[objIndex].correct = true;
   }
+
+  let counter = 0;
+  let numMax = numOfXPieces * numOfYPieces;
+
+  // Kør loop med json - data
+  checkList.forEach(check => {
+    console.log("checkList");
+    if (checkList[counter].correct === true) {
+      counter++;
+    }
+    if (counter === numMax) alert("You did it!");
+  });
 }
