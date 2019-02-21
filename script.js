@@ -24,13 +24,15 @@ function loadTheImage() {
   numOfYPieces = document.querySelector("#inputY").value;
 
   // load image in DOM
-  image = document.querySelector("img");
+  image = document.querySelector("#image");
   image.src = inputSrc;
 
   // You find out how big the picture is.
-  naturalHeight = image.naturalHeight;
+  let naturalHeight = image.naturalHeight;
+  let naturalWidth = image.naturalWidth;
   document.querySelector("img").onload = piecesLoop();
-  console.log(naturalHeight);
+  console.log("nat-H: " + naturalHeight);
+  console.log("nat-W: " + naturalWidth);
 }
 
 // You make a 2D loop to generate the dropzones, according to the user input.
@@ -70,21 +72,23 @@ function piecesLoop() {
 
       piece.classList.add("piece");
       // piece.textContent = `${x}${y}`;
-      piece.style.height = container_height / numOfYPieces + "px";
-      piece.style.width = container_width / numOfXPieces + "px";
+
+      let pieceWidth = container_height / numOfYPieces;
+      let pieceHeight = container_height / numOfYPieces;
+
+      piece.style.width = pieceWidth + "px";
+      piece.style.height = pieceHeight + "px";
 
       // set background image
       piece.style.backgroundImage = `url('${inputSrc}')`;
-      piece.style.backgroundPosition = `${x *
-        (container_width / numOfYPieces)}px ${y *
-        (container_height / numOfXPieces)}px`;
+      piece.style.backgroundPosition = `-${x * pieceWidth}px -${y * pieceHeight}px`;
 
       piece.style.position = "absolute";
       piece.id = "draggable";
       piece.draggable = "true";
 
-      piece.style.left = `${Math.random() * 100 + 500}px`;
-      piece.style.top = `${Math.random() * 100}px`;
+      piece.style.left = `${700 + Math.random() * 250}px`;
+      piece.style.top = `${250 + Math.random() * 200}px`;
 
       // unique piece ID for checking placement
       piece.dataset.xyid = `id${x}${y}`;
@@ -172,7 +176,7 @@ function checkPieces(pieceDropped, droppedInZone) {
   let counter = 0;
   let numMax = numOfXPieces * numOfYPieces;
 
-  // Kør loop med json - data
+  // Check list for correct pieces
   checkList.forEach(check => {
     console.log("checkList");
     if (checkList[counter].correct === true) {
