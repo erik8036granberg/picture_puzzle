@@ -33,6 +33,15 @@ function loadTheImage() {
   document.querySelector("img").onload = piecesLoop();
   console.log("nat-H: " + naturalHeight);
   console.log("nat-W: " + naturalWidth);
+
+  // make button to reset
+  document
+    .querySelector("#makePuzzle")
+    .removeEventListener("click", loadTheImage);
+
+  document.querySelector("#makePuzzle").textContent = "New puzzle";
+
+  document.querySelector("#makePuzzle").addEventListener("click", reset);
 }
 
 // You make a 2D loop to generate the dropzones, according to the user input.
@@ -81,7 +90,8 @@ function piecesLoop() {
 
       // set background image
       piece.style.backgroundImage = `url('${inputSrc}')`;
-      piece.style.backgroundPosition = `-${x * pieceWidth}px -${y * pieceHeight}px`;
+      piece.style.backgroundPosition = `-${x * pieceWidth}px -${y *
+        pieceHeight}px`;
 
       piece.style.position = "absolute";
       piece.id = "draggable";
@@ -104,9 +114,9 @@ function dragPiece() {
   console.log("dragPiece");
 
   /* events fired on the draggable target */
-  document.addEventListener("drag", function (event) {}, false);
+  document.addEventListener("drag", function(event) {}, false);
 
-  document.addEventListener("dragstart", function (event) {
+  document.addEventListener("dragstart", function(event) {
     // store a ref. on the dragged elem
     dragged = event.target;
     // make it half transparent
@@ -115,18 +125,18 @@ function dragPiece() {
     event.dataTransfer.setData("text", event.target.dataset.xyid);
   });
 
-  document.addEventListener("dragend", function (event) {
+  document.addEventListener("dragend", function(event) {
     // reset the transparency
     event.target.style.opacity = "";
   });
 
   /* events fired on the drop targets */
-  document.addEventListener("dragover", function (event) {
+  document.addEventListener("dragover", function(event) {
     // prevent default to allow drop
     event.preventDefault();
   });
 
-  document.addEventListener("drop", function (event) {
+  document.addEventListener("drop", function(event) {
     // prevent default action (open as link for some elements)
     event.preventDefault();
 
@@ -184,4 +194,10 @@ function checkPieces(pieceDropped, droppedInZone) {
     }
     if (counter === numMax) alert("You did it!");
   });
+}
+
+function reset() {
+  console.log("reset");
+  // reload page
+  location.reload(true);
 }
